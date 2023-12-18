@@ -13,6 +13,8 @@ mkdir -vp /data/.cache \
   /data/models/LDSR \
   /data/models/VAE
 
+
+git lfs clone -b main --single-branch https://huggingface.co/openai/clip-vit-large-patch14 /data/hf/clip-vit-large-patch14 && rm -rf /data/hf/clip-vit-large-patch14/.git
 echo "Downloading, this might take a while..."
 
 aria2c -x 10 --disable-ipv6 --input-file /docker/links.txt --dir /data/models --continue
