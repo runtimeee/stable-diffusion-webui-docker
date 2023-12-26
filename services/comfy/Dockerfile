@@ -6,15 +6,25 @@ FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
 
 ENV DEBIAN_FRONTEND=noninteractive PIP_PREFER_BINARY=1
 
-RUN apt-get update && apt-get install -y git && apt-get clean
+RUN apt update && apt install -y git
 
 ENV ROOT=/stable-diffusion
 RUN --mount=type=cache,target=/root/.cache/pip \
   git clone https://github.com/comfyanonymous/ComfyUI.git ${ROOT} && \
   cd ${ROOT} && \
   git checkout master && \
-  git reset --hard 884ea653c8d6fe19b3724f45a04a0d74cd881f2f && \
+  # git reset --hard 884ea653c8d6fe19b3724f45a04a0d74cd881f2f && \
   pip install -r requirements.txt
+
+RUN mkdir /opt/custom_nodes && \
+    cd custom_nodes && \
+    git clone https://github.com/Fannovel16/comfyui_controlnet_aux.git && \
+    pip install -r ./comfyui_controlnet_aux/requirements.txt  && \
+    export PYTHONPATH=/opt/custom_nodes/ && \
+    python3 -c "import comfyui_controlnet_aux" && \
+    git clone https://github.com/ZHO-ZHO-ZHO/comfyui-portrait-master-zh-cn.git && \
+    pip install -r ./comfyui-portrait-master-zh-cn/requirements.txt 
+
 
 
 RUN --mount=type=cache,target=/root/.cache/pip  \
