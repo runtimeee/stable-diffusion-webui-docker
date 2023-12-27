@@ -20,7 +20,7 @@ mkdir -p /data/config/comfy/custom_nodes/comfyui_controlnet_aux/ckpts/lllyasviel
 
 cd /data/config/comfy/custom_nodes/comfyui_controlnet_aux/ckpts/lllyasviel/
 
-git lfs cone -b main --single-branch  https://huggingface.co/lllyasviel/Annotators.git && rm -rf Annotators/.git
+git lfs clone -b main --single-branch  https://huggingface.co/lllyasviel/Annotators.git && rm -rf Annotators/.git
 
 
 echo "Downloading, this might take a while..."
