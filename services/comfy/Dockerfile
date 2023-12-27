@@ -17,13 +17,13 @@ RUN --mount=type=cache,target=/root/.cache/pip \
   pip install -r requirements.txt
 
 RUN mkdir /opt/custom_nodes && \
-    cd custom_nodes && \
+    cd /opt/custom_nodes && \
+    apt install ffmpeg libsm6 libxext6  -y && \
     git clone https://github.com/Fannovel16/comfyui_controlnet_aux.git && \
     pip install -r ./comfyui_controlnet_aux/requirements.txt  && \
-    export PYTHONPATH=/opt/custom_nodes/ && \
+    export PYTHONPATH=/opt/custom_nodes/:${ROOT} && \
     python3 -c "import comfyui_controlnet_aux" && \
-    git clone https://github.com/ZHO-ZHO-ZHO/comfyui-portrait-master-zh-cn.git && \
-    pip install -r ./comfyui-portrait-master-zh-cn/requirements.txt 
+    git clone https://github.com/ZHO-ZHO-ZHO/comfyui-portrait-master-zh-cn.git
 
 
 
